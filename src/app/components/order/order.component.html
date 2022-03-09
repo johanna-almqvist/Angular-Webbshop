@@ -1,0 +1,99 @@
+<div class="container">
+  <button routerLink="../check-out" class="btn btn-secondary mb-5">
+    Tillbaka till Varukorg
+  </button>
+  <div class="row">
+    <h1>Kassa</h1>
+
+    <div class="col-12" *ngFor="let movie of moviesInOrder; let i = index">
+      <div class="card flex-row">
+        <img [src]="movie.imageUrl" alt="bild på film" width="100px" />
+        <div class="card-body position-relative">
+          <h3 class="mb-0">{{ movie.name }}</h3>
+          <div class="mb-1 text-muted">Utgivningsår: {{ movie.year }}</div>
+          <div class="fw-bold text-end">{{ movie.price }} kr</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 d-flex justify-content-between mt-2">
+      <span class="font-weight-bold h4">Summa inkl moms</span>
+      <span class="font-weight-bold h4">{{ getTotalPrice() }} kr</span>
+    </div>
+
+    <h2 class="mt-4">Dina Uppgifter</h2>
+
+    <div>
+      <form [formGroup]="buyerForm">
+        <div class="row mb-3">
+          <label for="inputEmail3" class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-10">
+            <input
+              type="email"
+              name="email"
+              class="form-control"
+              id="inputEmail3"
+              formControlName="email"
+              ngModel
+              email
+              placeholder="anders.andersson@gmail.com"
+            />
+            <div *ngIf="buyerForm.get('email')?.invalid">
+              Detta fält kräver en giltig email
+            </div>
+          </div>
+        </div>
+
+        <fieldset class="row mb-3">
+          <legend class="col-form-label col-sm-2 pt-0">Betalsätt</legend>
+
+          <div class="col-sm-10">
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="payment"
+                id="gridRadios1"
+                formControlName="payment"
+                value="swish"
+              />
+              <label class="form-check-label" for="gridRadios1">Swish</label>
+            </div>
+
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                type="radio"
+                name="payment"
+                id="gridRadios2"
+                formControlName="payment"
+                value="paypal"
+              />
+              <label class="form-check-label" for="gridRadios2">PayPal</label>
+            </div>
+
+            <div class="form-check">
+              <input
+                class="form-check-input"
+                name="payment"
+                id="gridRadios3"
+                type="radio"
+                formControlName="payment"
+                value="klarna"
+              />
+              <label class="form-check-label" for="gridRadios3">Klarna</label>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+      <button
+        type="submit"
+        [disabled]="!buyerForm.valid"
+        class="btn btn-primary mb-5"
+        (click)="sendOrder()"
+      >
+        Slutför Beställning
+      </button>
+    </div>
+  </div>
+</div>

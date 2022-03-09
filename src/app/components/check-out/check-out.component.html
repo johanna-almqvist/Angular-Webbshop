@@ -1,0 +1,39 @@
+<div class="container">
+  <h1 class="text-center">Varukorg</h1>
+  <div *ngIf="basketIsEmpty()" class="mt-4 text-center">Varukorgen är tom</div>
+
+  <div class="row" *ngIf="!basketIsEmpty()">
+    <div class="col-12" *ngFor="let movie of moviesInBasket; let i = index">
+      <div class="card flex-row">
+        <img [src]="movie.imageUrl" alt="bild på film" width="100px" />
+        <div class="card-body position-relative">
+          <h3 class="mb-0">{{ movie.name }}</h3>
+          <div class="mb-1 text-muted">Utgivningsår: {{ movie.year }}</div>
+          <div class="fw-bold text-end">{{ movie.price }} kr</div>
+          <div class="position-absolute top-0 end-0 m-2">
+            <button
+              type="button"
+              class="btn btn-secondary"
+              (click)="removeFromBasket(i)"
+            >
+              <i class="bi bi-trash"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-12 mt-2 d-flex justify-content-between px-4">
+      <span class="font-weight-bold h4">Summa inkl moms</span>
+      <span class="font-weight-bold h4">{{ getTotalPrice() }} kr </span>
+    </div>
+
+    <div class="col-12 justify-content-end d-flex mt-2 p-0 mb-5">
+      <div class="col-lg-4 col-sm-12">
+        <button routerLink="../order" class="btn btn-primary w-100">
+          Till Kassa
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
